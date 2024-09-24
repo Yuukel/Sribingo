@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+body{
+    font-family: 'Rubik';
+    padding: 0;
+    margin: 0;
+    user-select: none;
+}
+
+td{
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Animation pour déplacer le dégradé */
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.floating-text {
+    position: absolute;
+    font-size: 3rem;
+    color: #ff007f;
+    animation: float 3s ease-in-out infinite; /* Animation de flottement */
+    top: 10px; /* Positionne en haut */
+    right: 10px; /* Positionne à droite */
+    pointer-events: none; /* Désactive les événements de souris */
+}
+
+/* Animation de flottement */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); } /* Flotte vers le haut */
+}
