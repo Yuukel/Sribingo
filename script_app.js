@@ -1,8 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
 import { getDatabase, ref, set, push, onValue } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-database.js";
 
-console.log("Fichier app.js chargé et exécuté");
-
 const firebaseConfig = {
   apiKey: "AIzaSyBJe-cl2j0LOsM4hIJUByibMnZVz-tUC5E",
   authDomain: "sri-bingo.firebaseapp.com",
@@ -74,7 +72,6 @@ export function sendScore(score){
 
     const scoreRef = ref(database, `rooms/${roomId}/players/${playerName}/score`);
     set(scoreRef, score);
-    updatePlayerScore();
 }
 
 // Fonction pour mettre à jour le score d'un joueur
@@ -97,6 +94,7 @@ function updatePlayerScore() {
                 const player = players[playerKey];
                 const li = document.createElement('div');
                 li.innerText = `${playerKey} : ${player.score}`;
+                li.classList.add("text-xl","font-bold", "pr-3", "text-white");
                 scoreList.appendChild(li);  // Ajoute chaque joueur à la liste
             });
         } else {
@@ -115,14 +113,20 @@ function displayRooms() {
         const rooms = snapshot.val();
         if (rooms) {
             Object.keys(rooms).forEach(roomId => {
+                const cont = document.createElement('div');
                 const li = document.createElement('div');
                 const btn = document.createElement('button');
                 btn.innerText = `Rejoindre la room`;
                 btn.addEventListener('click', joinRoom);
                 btn.id = roomId;
-                li.innerText = `Room ID: ${roomId}`;
-                li.appendChild(btn);
-                roomsList.appendChild(li);
+                li.innerText = `Room ID : ${roomId}`;
+                li.classList.add("mr-10");
+                btn.classList.add("rounded", "border", "border-2", "border-black", "bg-slate-500", "p-1");
+                cont.appendChild(li);
+                cont.appendChild(btn);
+
+                cont.classList.add("flex", "justify-between", "items-center","mb-2");
+                roomsList.appendChild(cont);
             });
         }
     });
@@ -160,7 +164,6 @@ function startGame(){
 
     onValue(started, (snapshot) => {
         const isStarted = snapshot.val();
-        console.log(isStarted);
 
         if(isStarted){
             const game = document.getElementById("game");
@@ -170,9 +173,12 @@ function startGame(){
             game.classList.remove("hidden");
 
             updatePlayerScore()
+            clearInterval(interval);
         }
     });
 }
 
 document.getElementById('createRoomBtn').addEventListener('click', createRoom);
 document.getElementById('displayRoomsBtn').addEventListener('click', displayRooms);
+
+displayRooms();

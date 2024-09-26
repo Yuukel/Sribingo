@@ -32,12 +32,15 @@ const phrases = [
     "Hakuna Matata"
 ];
 
+var solo = false;
 document.getElementById("solo").addEventListener('click', () => {
     const lobby = document.getElementById("lobby");
     const game = document.getElementById("game");
 
     lobby.classList.add("hidden");
     game.classList.remove("hidden");
+
+    solo = true;
 })
 
 var x = 3;
@@ -70,7 +73,7 @@ function toggleClass(event) {
         scoreText.textContent = "BINGO, AH OUIIIIIIIIIIII";
         showFloatingMessage();
     }
-    sendScore(score);
+    if(!solo) sendScore(score);
 }
 
 function showFloatingMessage() {

@@ -7,28 +7,28 @@
     </head>
     <body class="bg-gradient-to-t from-teal-600 to-blue-600 pt-3 flex flex-col items-center overflow-hidden h-screen">
         <h1 class="text-5xl font-bold text-slate-300 mb-5 gradient-text">SRI'BINGO</h1>
-        <div id="lobby">
-            <input type="text" id="playerName" placeholder="Entrez votre pseudo">
-            <h2>Créer une partie</h2>
-            <input type="text" id="roomName" placeholder="Nom de la room">
-            <button id="createRoomBtn">Créer la room</button>
-            <h2>Rejoindre une partie</h2>
-            <button id="displayRoomsBtn">Afficher les rooms</button>
-            <div id="roomsList"></div>
-            <button id="solo">Jouer solo</button>
+        <div id="lobby" class="flex flex-col items-center justify-center h-4/6">
+            <input type="text" id="playerName" placeholder="Entrez votre pseudo" class="mb-5 border border-4 border-black rounded mb-2">
+            <h2 class="text-2xl">Créer une partie</h2>
+            <input type="text" id="roomName" placeholder="Nom de la room" class="border border-4 border-black rounded mb-2">
+            <button id="createRoomBtn" class="mb-10 p-2 rounded border border-2 border-black bg-slate-500">Créer la room</button>
+            <h2 class="text-2xl">Liste des rooms</h2>
+            <button id="displayRoomsBtn" class="mb-3 p-2 rounded border border-2 border-black bg-slate-500">Actualiser les rooms</button>
+            <div id="roomsList" class="mb-20"></div>
+            <button id="solo" class="p-2 rounded border border-2 border-black bg-slate-500">Jouer solo</button>
         </div>
         <div id="waitingRoom" class="hidden">
             <p>GG Timé</p>
             <div id="playersList"></div>
         </div>
         <div id="game" class="w-screen h-5/6 flex justify-center items-center flex-col hidden">
-            <p id="score">Score : 0</p>
+            <p id="score" class="text-3xl font-bold text-white">Score : 0</p>
             <div class="w-screen h-5/6 flex justify-center">
                 <table id="bingo" class=" border-8 border-black shadow-2xl table-fixed w-4/5 border-collapse border-spacing-2 text-center">
                   
                 </table>
             </div>
-            <div id="scoreList"></div>
+            <div id="scoreList" class="flex justify-between items-center"></div>
         </div>
         <div id="floatingMessage" class="floating-text" style="display: none;">
             AH OUIIIIIIIII
