@@ -8,7 +8,7 @@ body{
 
 td{
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.2s ease;
 }
 
 /* Animation pour déplacer le dégradé */

@@ -1,3 +1,5 @@
+import { sendScore } from './script_app.js';
+
 const phrases = [
     "Bravo",
     "Ah oui",
@@ -20,8 +22,23 @@ const phrases = [
     "_____ vaut mieux qu'un long discours",
     "Génie",
     "Candidat",
-    "Couscous"
+    "Couscous",
+    "Copier / Coller",
+    "Ne pas déranger",
+    "Papa",
+    "Joli",
+    "Il demande de ne pas écrire",
+    "Il raconte une anecdote",
+    "Hakuna Matata"
 ];
+
+document.getElementById("solo").addEventListener('click', () => {
+    const lobby = document.getElementById("lobby");
+    const game = document.getElementById("game");
+
+    lobby.classList.add("hidden");
+    game.classList.remove("hidden");
+})
 
 var x = 3;
 var score = 0;
@@ -53,6 +70,7 @@ function toggleClass(event) {
         scoreText.textContent = "BINGO, AH OUIIIIIIIIIIII";
         showFloatingMessage();
     }
+    sendScore(score);
 }
 
 function showFloatingMessage() {
