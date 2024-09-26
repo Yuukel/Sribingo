@@ -73,7 +73,8 @@ export function sendScore(score){
     const playerName = document.getElementById('playerName').value;
 
     const scoreRef = ref(database, `rooms/${roomId}/players/${playerName}/score`);
-    set(scoreRef, score)
+    set(scoreRef, score);
+    updatePlayerScore();
 }
 
 // Fonction pour mettre à jour le score d'un joueur
