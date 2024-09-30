@@ -74,7 +74,6 @@ export function sendScore(score){
     set(scoreRef, score);
 }
 
-// Fonction pour mettre à jour le score d'un joueur
 function updatePlayerScore() {
     const roomId = document.getElementById('waitingRoom').firstChild.id;
     const scoreList = document.getElementById('scoreList');
@@ -83,22 +82,28 @@ function updatePlayerScore() {
 
     const playersRef = ref(database, `rooms/${roomId}/players`);
     
-    // Écoute en temps réel les changements dans la liste des joueurs
     onValue(playersRef, (snapshot) => {
         const players = snapshot.val();
-        scoreList.innerHTML = '';  // Vide la liste avant de la remplir
+        scoreList.innerHTML = '';
 
         if (players) {
-            // Parcours des joueurs récupérés
             Object.keys(players).forEach((playerKey) => {
                 const player = players[playerKey];
                 const li = document.createElement('div');
                 li.innerText = `${playerKey} : ${player.score}`;
-                li.classList.add("text-xl","font-bold", "pr-3", "text-white");
-                scoreList.appendChild(li);  // Ajoute chaque joueur à la liste
+                li.classList.add(
+                    'text-lg',
+                    'font-semibold',
+                    'text-teal-700',
+                    'mb-2',
+                    'p-2',
+                    'bg-white',
+                    'rounded-lg',
+                    'shadow-md'
+                );
+                scoreList.appendChild(li);
             });
         } else {
-            // Si aucun joueur n'est trouvé
             scoreList.innerText = "Aucun joueur dans cette room.";
         }
     });
@@ -114,23 +119,62 @@ function displayRooms() {
         if (rooms) {
             Object.keys(rooms).forEach(roomId => {
                 const cont = document.createElement('div');
+
                 const li = document.createElement('div');
+                li.innerText = `Room ID: ${roomId}`;
+                
+                li.classList.add(
+                    "text-lg",
+                    "font-semibold",
+                    "text-teal-700",
+                    "mr-10"
+                );
+
                 const btn = document.createElement('button');
                 btn.innerText = `Rejoindre la room`;
+                
                 btn.addEventListener('click', joinRoom);
                 btn.id = roomId;
-                li.innerText = `Room ID : ${roomId}`;
-                li.classList.add("mr-10");
-                btn.classList.add("rounded", "border", "border-2", "border-black", "bg-slate-500", "p-1");
+
+                btn.classList.add(
+                    "rounded-lg",
+                    "border",
+                    "border-2",
+                    "border-teal-600",
+                    "bg-teal-500",
+                    "hover:bg-teal-600",
+                    "text-white",
+                    "font-semibold",
+                    "px-4",
+                    "py-2",
+                    "transition-all",
+                    "duration-300",
+                    "shadow-md"
+                );
+
                 cont.appendChild(li);
                 cont.appendChild(btn);
 
-                cont.classList.add("flex", "justify-between", "items-center","mb-2");
+                cont.classList.add(
+                    "flex",
+                    "justify-between",
+                    "items-center",
+                    "bg-white",
+                    "p-4",
+                    "rounded-lg",
+                    "shadow-lg",
+                    "mb-4",
+                    "hover:bg-gray-100",
+                    "transition-all",
+                    "duration-300"
+                );
+
                 roomsList.appendChild(cont);
             });
         }
     });
 }
+
 var interval = setInterval(displayRooms, 10000);
 
 function showPlayers() {

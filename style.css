@@ -11,25 +11,17 @@ td{
     transition: background-color 0.2s ease;
 }
 
-/* Animation pour déplacer le dégradé */
-@keyframes gradientAnimation {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
 .floating-text {
     position: absolute;
     font-size: 3rem;
     color: #ff007f;
-    animation: float 3s ease-in-out infinite; /* Animation de flottement */
-    top: 10px; /* Positionne en haut */
-    right: 10px; /* Positionne à droite */
-    pointer-events: none; /* Désactive les événements de souris */
+    animation: float 3s ease-in-out infinite;
+    top: 10px;
+    right: 10px;
+    pointer-events: none;
 }
 
-/* Animation de flottement */
 @keyframes float {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-20px); } /* Flotte vers le haut */
+    50% { transform: translateY(-20px); }
 }

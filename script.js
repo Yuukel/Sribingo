@@ -77,7 +77,7 @@ function toggleClass(event) {
 }
 
 function showFloatingMessage() {
-    floatingMessage.style.display = "block"; // Affiche le message
+    floatingMessage.style.display = "block";
 }
 
 for(let i = 0 ; i < x ; i++){
@@ -89,7 +89,27 @@ for(let i = 0 ; i < x ; i++){
         cell.textContent = phrases[0];
         phrases.shift();
 
-        cell.classList.add("border","border-black", "border-4", "text-slate-50", "bg-red-900", "text-2xl");
+        cell.classList.add(
+            "border",
+            "border-gray-300",
+            "bg-red-900",
+            "text-white",
+            "font-bold",
+            "shadow-lg",
+            "rounded-md",
+            "p-2",
+            "transition-all",
+            "duration-300",
+            "text-center",
+            "w-24",
+            "h-24",
+            "lg:w-28",
+            "lg:h-28",
+            "text-base",
+            "lg:text-xl",
+            "overflow-hidden",
+            "break-words"
+        );
 
         cell.addEventListener('click', toggleClass);
 

@@ -1,39 +1,71 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Sri'Bingo</title>
-        <link rel="stylesheet" href="style.css">
-        <script src="https://cdn.tailwindcss.com"></script>
-    </head>
-    <body class="bg-gradient-to-t from-teal-600 to-blue-600 pt-3 flex flex-col items-center overflow-hidden h-screen">
-        <h1 class="text-5xl font-bold text-slate-300 mb-5 gradient-text">SRI'BINGO</h1>
-        <div id="lobby" class="flex flex-col items-center justify-center h-4/6">
-            <input type="text" id="playerName" placeholder="Entrez votre pseudo" class="mb-5 border border-4 border-black rounded mb-2">
-            <h2 class="text-2xl">Créer une partie</h2>
-            <input type="text" id="roomName" placeholder="Nom de la room" class="border border-4 border-black rounded mb-2">
-            <button id="createRoomBtn" class="mb-10 p-2 rounded border border-2 border-black bg-slate-500">Créer la room</button>
-            <h2 class="text-2xl">Liste des rooms</h2>
-            <button id="displayRoomsBtn" class="mb-3 p-2 rounded border border-2 border-black bg-slate-500">Actualiser les rooms</button>
-            <div id="roomsList" class="mb-20"></div>
-            <button id="solo" class="p-2 rounded border border-2 border-black bg-slate-500">Jouer solo</button>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sri'Bingo</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-t from-teal-600 to-blue-600 min-h-screen flex flex-col items-center justify-center px-4">
+    <header class="mb-8">
+        <h1 class="text-4xl font-extrabold text-slate-100 gradient-text drop-shadow-lg text-center">SRI'BINGO</h1>
+    </header>
+
+    <div id="lobby" class="bg-white/80 backdrop-blur-md rounded-lg shadow-xl p-6 max-w-lg w-full">
+        <div class="mb-6">
+            <input type="text" id="playerName" placeholder="Entrez votre pseudo"
+                class="w-full p-2 border border-gray-400 rounded focus:outline-none focus:ring-2 focus:ring-teal-500">
         </div>
-        <div id="waitingRoom" class="hidden">
-            <p>GG Timé</p>
-            <div id="playersList"></div>
+
+        <div class="mb-6 text-center">
+            <h2 class="text-2xl font-semibold text-teal-700 mb-2">Créer une partie</h2>
+            <input type="text" id="roomName" placeholder="Nom de la room"
+                class="w-full p-2 border border-gray-400 rounded focus:outline-none focus:ring-2 focus:ring-teal-500 mb-4">
+            <button id="createRoomBtn"
+                class="w-full bg-teal-500 text-white font-semibold p-2 rounded shadow hover:bg-teal-600 transition-all duration-300">
+                Créer la room
+            </button>
         </div>
-        <div id="game" class="w-screen h-5/6 flex justify-center items-center flex-col hidden">
-            <p id="score" class="text-3xl font-bold text-white">Score : 0</p>
-            <div class="w-screen h-5/6 flex justify-center">
-                <table id="bingo" class=" border-8 border-black shadow-2xl table-fixed w-4/5 border-collapse border-spacing-2 text-center">
-                  
-                </table>
-            </div>
-            <div id="scoreList" class="flex justify-between items-center"></div>
+
+        <div class="mb-6 text-center">
+            <h2 class="text-2xl font-semibold text-teal-700 mb-2">Liste des rooms</h2>
+            <button id="displayRoomsBtn"
+                class="w-full bg-slate-500 text-white font-semibold p-2 rounded shadow hover:bg-slate-600 transition-all duration-300 mb-4">
+                Actualiser les rooms
+            </button>
+            <div id="roomsList" class="h-40 overflow-y-auto bg-gray-100 p-4 border rounded shadow-inner"></div>
         </div>
-        <div id="floatingMessage" class="floating-text" style="display: none;">
-            AH OUIIIIIIIII
+
+        <div class="text-center">
+            <button id="solo"
+                class="w-full bg-blue-500 text-white font-semibold p-2 rounded shadow hover:bg-blue-600 transition-all duration-300">
+                Jouer solo
+            </button>
         </div>
-        <script src="script_app.js" type="module"></script>
-        <script src="script.js" type="module"></script>
-    </body>
+    </div>
+
+    <div id="waitingRoom" class="hidden mt-10 bg-white/80 backdrop-blur-md p-6 rounded-lg shadow-lg w-full max-w-lg">
+        <p class="text-xl font-bold text-teal-700">GG Timé</p>
+        <div id="playersList" class="mt-5 text-teal-600 font-semibold"></div>
+    </div>
+
+    <div id="game" class="hidden w-full max-w-4xl mx-auto bg-white/80 backdrop-blur-md rounded-lg shadow-lg p-6 flex flex-col items-center">
+        <p id="score" class="font-bold text-xl text-teal-700 mb-6">Score : 0</p>
+        <div class="overflow-auto max-w-full max-h-full overflow-hidden">
+            <table id="bingo"
+                class="border-8 border-black shadow-2xl table-fixed border-collapse border-spacing-2 text-center w-full h-full">
+            </table>
+        </div>
+        <div id="scoreList" class="flex justify-between items-center mt-6 w-full"></div>
+    </div>
+
+    <!-- Floating Message -->
+    <div id="floatingMessage" class="floating-text text-2xl font-extrabold text-teal-600" style="display: none;">
+        AH OUIIIIIIIII
+    </div>
+
+    <script src="script_app.js" type="module"></script>
+    <script src="script.js" type="module"></script>
+</body>
 </html>
