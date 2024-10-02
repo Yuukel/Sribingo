@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sri'Bingo</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gradient-to-t from-teal-600 to-blue-600 min-h-screen flex flex-col items-center justify-center px-4">
+<body class="bg-gradient-to-t from-teal-600 to-blue-600 min-h-screen flex flex-col items-center justify-center px-4 overflow-hidden">
     <header class="mb-8">
         <h1 class="text-4xl font-extrabold text-slate-100 gradient-text drop-shadow-lg text-center">SRI'BINGO</h1>
     </header>
@@ -57,13 +58,73 @@
                 class="border-8 border-black shadow-2xl table-fixed border-collapse border-spacing-2 text-center w-full h-full">
             </table>
         </div>
-        <div id="scoreList" class="flex justify-between items-center mt-6 w-full"></div>
+        <div id="scoreList" class="flex justify-between items-center mt-6 w-full overflow-x-auto"></div>
     </div>
 
-    <!-- Floating Message -->
     <div id="floatingMessage" class="floating-text text-2xl font-extrabold text-teal-600" style="display: none;">
         AH OUIIIIIIIII
     </div>
+
+    <button id="toggleChatBtn" class="hidden text-center fixed top-5 left-5 pt-4 pb-4 pr-5 pl-5 bg-teal-600 text-white rounded-full shadow-lg hover:bg-teal-700 transition duration-300">
+        <i class="fas fa-comment-alt"></i>
+    </button>
+
+    <div id="chatbox" class="hidden fixed lg:top-5 lg:left-5 top-0 left-0 w-80 h-96 bg-white shadow-xl rounded-b-lg overflow-hidden flex flex-col">
+        <div class="bg-teal-600 text-white p-4 flex justify-between items-center">
+            <h3 class="font-bold">Chatbox</h3>
+            <button id="closeChatBtn" class="text-white text-2xl hover:text-gray-300 transition duration-300">
+                <i class="fa-solid fa-circle-xmark"></i>
+            </button>
+        </div>
+
+        <div id="chatMessages" class="p-4 overflow-y-auto flex-1 bg-gray-100">
+            <div class="mb-2">
+                <span class="text-gray-600 font-bold">Timé:</span>
+                <span>Monsieur, je le savais mais je voulais pas le dire.</span>
+            </div>
+        </div>
+
+        <div class="p-2 bg-white border-t border-gray-300 flex justify-center items-center">
+            <input type="text" id="chatInput" placeholder="Ecrivez un message..." class="w-full p-2 border border-gray-300 rounded text-sm">
+            <button id="sendMessageBtn" class="text-center ml-3 pt-2 pb-2 pr-5 pl-5 bg-teal-600 text-white rounded-full shadow-lg hover:bg-teal-700 transition duration-300">
+                <i class="fa-solid fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <button id="toggleAdminBtn" class="text-center fixed top-5 right-5 pt-4 pb-4 pr-5 pl-5 bg-teal-600 text-white rounded-full shadow-lg hover:bg-teal-700 transition duration-300">
+        <i class="fa-solid fa-screwdriver-wrench"></i>
+    </button>
+
+    <div id="adminbox" class="hidden fixed lg:top-5 lg:right-5 top-0 right-0 w-80 h-96 bg-white shadow-xl rounded-b-lg overflow-hidden flex flex-col">
+        <div class="bg-teal-600 text-white p-4 flex justify-between items-center">
+            <h3 class="font-bold">Adminbox</h3>
+            <button id="closeAdminBtn" class="text-white text-2xl hover:text-gray-300 transition duration-300">
+                <i class="fa-solid fa-circle-xmark"></i>
+            </button>
+        </div>
+        <div id="adminlogin" class="flex flex-col justify-between items-center w-full h-full p-4">
+            <div id="inputs" class="flex flex-col justify-center items-center">
+                <label for="identifiant">identifiant</label>
+                <input type="text" name="identifiant" id="identifiant"
+                class="w-full p-2 border border-gray-400 rounded focus:outline-none focus:ring-2 focus:ring-teal-500 mb-4">
+                <label for="motdepasse">mot de passe</label>
+                <input type="password" name="motdepasse" id="motdepasse"
+                class="w-full p-2 border border-gray-400 rounded focus:outline-none focus:ring-2 focus:ring-teal-500 mb-4">
+            </div>
+            <button
+            class="w-11/12 bg-teal-500 text-white font-semibold p-2 rounded shadow hover:bg-teal-600 transition-all duration-300">Connexion</button>
+        </div>
+    </div>
+
+    <p class="fixed bottom-0 right-0 flex">
+        <img style="border:0;width:88px;height:31px"
+            src="http://jigsaw.w3.org/css-validator/images/vh40"
+            alt="HTML Valide !" />
+        <img style="border:0;width:88px;height:31px"
+            src="http://jigsaw.w3.org/css-validator/images/vcss-blue"
+            alt="CSS Valide !" />
+    </p>
 
     <script src="script_app.js" type="module"></script>
     <script src="script.js" type="module"></script>

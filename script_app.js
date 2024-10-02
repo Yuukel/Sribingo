@@ -1,5 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
-import { getDatabase, ref, set, push, onValue } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-database.js";
+import { getDatabase, ref, set, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-database.js";
+import { scrollToBottom } from './script.js'
 
 const firebaseConfig = {
   apiKey: "AIzaSyBJe-cl2j0LOsM4hIJUByibMnZVz-tUC5E",
@@ -203,6 +204,11 @@ function startGameBtn(){
 }
 
 function startGame(){
+    const chatBtn = document.getElementById("toggleChatBtn");
+    chatBtn.classList.remove('hidden');
+    const adminBtn = document.getElementById("toggleAdminBtn");
+    adminBtn.classList.add('hidden');
+
     const roomId = document.getElementById("waitingRoom").firstChild.id;
     var started = ref(database, `rooms/${roomId}/started`);
 
@@ -221,6 +227,153 @@ function startGame(){
         }
     });
 }
+
+export function displayChat() {
+    const roomId = document.getElementById("waitingRoom").firstChild.id;
+    const chatRef = ref(database, `rooms/${roomId}/chatbox`);
+    const chatBox = document.getElementById("chatMessages");
+
+    // Clear previous messages in chatBox
+    chatBox.innerHTML = '';
+
+    // Listen for changes in the chatbox in real-time
+    onValue(chatRef, (snapshot) => {
+        const messages = snapshot.val();
+        if (messages) {
+            // Clear the chatbox before appending new messages
+            chatBox.innerHTML = '';
+
+            // Loop through the messages and display each one
+            Object.values(messages).forEach(message => {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('mb-2');
+
+                // Format the message
+                messageDiv.innerHTML = `
+                    <span class="text-gray-600 font-bold">${message.username}:</span>
+                    <span>${message.text}</span>
+                `;
+
+                // Append the message to the chatBox
+                chatBox.appendChild(messageDiv);
+            });
+
+            // Scroll to the bottom of the chat after messages are loaded
+            scrollToBottom();
+        }
+    });
+
+    // Ensure that the event listener is only added once
+    const chatInput = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendMessageBtn');
+
+    // Remove any previous event listener to avoid multiple triggers
+    chatInput.removeEventListener('keyup', handleKeyUp);
+    chatInput.addEventListener('keyup', handleKeyUp);
+    sendBtn.removeEventListener('click', sendMessage);
+    sendBtn.addEventListener('click', sendMessage);
+}
+
+function handleKeyUp(e) {
+    if (e.key === "Enter") {
+        sendMessage();
+    }
+}
+
+function sendMessage() {
+    const roomId = document.getElementById("waitingRoom").firstChild.id;
+    const chatInput = document.getElementById('chatInput');
+    const playerName = document.getElementById('playerName').value;
+    const messageText = chatInput.value;
+
+    // Check if the message and playerName are not empty
+    if (messageText.trim() !== '' && playerName.trim() !== '') {
+        const newMessageRef = push(ref(database, `rooms/${roomId}/chatbox/`));
+
+        // Save the message to the database
+        set(newMessageRef, {
+            username: playerName,
+            text: messageText
+        }).then(() => {
+            // Clear the input field after sending the message
+            chatInput.value = '';
+        });
+    }
+}
+
+
+document.getElementById("closeAdminBtn").addEventListener("click", function() {
+    document.getElementById("adminbox").classList.add("hidden");
+});
+
+// Gérer la connexion
+document.querySelector("#adminlogin button").addEventListener("click", function() {
+    const identifiant = document.getElementById("identifiant").value;
+    const motdepasse = document.getElementById("motdepasse").value;
+
+    // Vérification des identifiants
+    if (identifiant === "admin" && motdepasse === "admin") {
+        // Si authentifié, remplacer le formulaire par la liste des rooms
+        loadRooms();
+    } else {
+        alert("Identifiant ou mot de passe incorrect");
+    }
+});
+
+function loadRooms() {
+    // Masquer le formulaire de connexion
+    document.getElementById("adminlogin").innerHTML = '';
+
+    // Créer un conteneur pour afficher la liste des rooms
+    const roomsListDiv = document.createElement("div");
+    roomsListDiv.id = "roomsListAdmin";
+    roomsListDiv.classList.add("flex", "flex-col", "space-y-4", "w-full", "p-4", "overflow-y-auto");
+
+    // Ajouter le conteneur dans l'adminbox
+    document.getElementById("adminlogin").appendChild(roomsListDiv);
+
+    // Récupérer les rooms depuis Firebase
+    const roomsRef = ref(database, 'rooms');
+    onValue(roomsRef, (snapshot) => {
+        const rooms = snapshot.val();
+        roomsListDiv.innerHTML = ''; // Réinitialiser la liste
+
+        if (rooms) {
+            // Parcourir les rooms et les afficher dans l'adminbox avec un bouton de suppression
+            Object.keys(rooms).forEach(roomId => {
+                const roomDiv = document.createElement('div');
+                roomDiv.classList.add("flex", "justify-between", "items-center", "bg-gray-100", "p-2", "rounded", "flex-1");
+
+                const roomInfo = document.createElement('span');
+                roomInfo.innerText = `Room ID: ${roomId}`;
+                roomDiv.appendChild(roomInfo);
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.innerText = "Supprimer";
+                deleteBtn.classList.add("bg-red-500", "text-white", "px-4", "py-2", "rounded", "hover:bg-red-600");
+                deleteBtn.addEventListener("click", function() {
+                    deleteRoom(roomId);
+                });
+
+                roomDiv.appendChild(deleteBtn);
+                roomsListDiv.appendChild(roomDiv);
+            });
+        } else {
+            roomsListDiv.innerText = 'Aucune room trouvée.';
+        }
+    });
+}
+
+function deleteRoom(roomId) {
+    const roomRef = ref(database, `rooms/${roomId}`);
+    remove(roomRef).then(() => {
+        alert(`Room ${roomId} supprimée avec succès`);
+        loadRooms(); // Recharger la liste des rooms
+    }).catch((error) => {
+        alert("Erreur lors de la suppression de la room : " + error.message);
+    });
+}
+
 
 document.getElementById('createRoomBtn').addEventListener('click', createRoom);
 document.getElementById('displayRoomsBtn').addEventListener('click', displayRooms);

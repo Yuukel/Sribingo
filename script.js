@@ -1,4 +1,4 @@
-import { sendScore } from './script_app.js';
+import { sendScore, displayChat } from './script_app.js';
 
 const phrases = [
     "Bravo",
@@ -117,3 +117,33 @@ for(let i = 0 ; i < x ; i++){
     }
     table.appendChild(row);
 }
+
+const toggleChatBtn = document.getElementById('toggleChatBtn');
+const closeChatBtn = document.getElementById('closeChatBtn');
+const chatbox = document.getElementById('chatbox');
+const chatMessages = document.getElementById('chatMessages');
+export function scrollToBottom() {
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+toggleChatBtn.addEventListener('click', () => {
+    chatbox.classList.toggle('hidden');
+    scrollToBottom();
+    displayChat();
+});
+
+closeChatBtn.addEventListener('click', () => {
+    chatbox.classList.add('hidden');
+});
+
+const toggleAdminBtn = document.getElementById('toggleAdminBtn');
+const closeAdminBtn = document.getElementById('closeAdminBtn');
+const adminbox = document.getElementById('adminbox');
+
+toggleAdminBtn.addEventListener('click', () => {
+    adminbox.classList.remove('hidden');
+});
+
+closeAdminBtn.addEventListener('click', () => {
+    adminbox.classList.add('hidden');
+});
